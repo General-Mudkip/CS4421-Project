@@ -1,8 +1,8 @@
-public class theproject {
+public class TheProject {
     public static void menu() { // Danny's function
         System.out.println("Select something");
 
-        theproject.handleInput("CPU_Info");
+        TheProject.handleInput("CPU_Info");
     }
 
     public static void handleInput(String UserInput) { // Hugh's function
@@ -10,6 +10,6 @@ public class theproject {
     }
 
     public static void main(String[] args) {
-        theproject.menu();
+        TheProject.menu();
     }
 }
