@@ -11,7 +11,7 @@ public class cpuInfo
     public native void read ();
 
     // Return the number of cores per CPU socket
-    public native int coresPerSocket ();
+    public native int coresPerSockets ();
 
     // Return the number of CPUs in this computer
     public native int socketCount ();
