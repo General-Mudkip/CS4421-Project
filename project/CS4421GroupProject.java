@@ -99,7 +99,7 @@ public class CS4421GroupProject {
         
         }
 
-    public static List<String> nameVendorDevice(String vendorID, String deviceID) throws Exception {
+    public static List<String> pciNamer(String vendorID, String deviceID) throws Exception {
         /*
          * This function takes two inputs for vendor ID and device ID, then returns a
          * string list containing the actual data,
@@ -109,9 +109,16 @@ public class CS4421GroupProject {
          * Created by Skye Fitzpatrick
          */
 
+        /*
+         * TO CALL pciNamer
+         * // numbers to be replaced with output from Mark's pciInfo code
+         * String vendorName = TheProject.pciNamer("8086", "0180").get(0);
+         * String deviceName = TheProject.pciNamer("8086", "0180").get(1);
+         * System.out.printf("Vendor: %s%nDevice: %s", vendorName, deviceName);
+         */
+
         // Read in data from the CSV file using Scanner
-        Scanner readCsv = new Scanner(new File(
-                "C:\\Users\\skyef\\Documents\\CS4421 - Problem Solving With Computers\\PCI-Lookup-finalfinal.csv"));
+        Scanner readCsv = new Scanner(new File(".\\project\\PCI-Lookup.csv"));
 
         List<List> pciData = new ArrayList(); // Initialise a 2-dimensional array for database rows and columns
         /*
@@ -169,4 +176,3 @@ public class CS4421GroupProject {
     public static void main(String[] args) throws Exception {
         TheProject.menu();
     }
-}
