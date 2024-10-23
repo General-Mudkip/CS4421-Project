@@ -8,6 +8,11 @@ public class CS4421GroupProject {
     public static void menu() throws Exception { // Danny's function
         Scanner input = new Scanner(System.in);
 
+        // Test code for pciNamer
+        // String vendorName = TheProject.pciNamer("8086", "0180").get(0);
+        // String deviceName = TheProject.pciNamer("8086", "0180").get(1);
+        // System.out.printf("Vendor: %s%nDevice: %s", vendorName, deviceName);
+
         while (true) {
             System.out.println("Main Menu");
             System.out.println("1) CPU Info");
@@ -102,8 +107,8 @@ public class CS4421GroupProject {
     public static List<String> pciNamer(String vendorID, String deviceID) throws Exception {
         /*
          * This function takes two inputs for vendor ID and device ID, then returns a
-         * string list containing the actual data,
-         * in the form of ["Vendor Name", "Device Name"]
+         * string list
+         * containing the actual data, in the form of ["Vendor Name", "Device Name"]
          * This is achieved by comparing the results to a csv database of >50,000 PCI
          * devices.
          * Created by Skye Fitzpatrick
@@ -111,29 +116,27 @@ public class CS4421GroupProject {
 
         /*
          * TO CALL pciNamer
-         * // numbers to be replaced with output from Mark's pciInfo code
+         * numbers to be replaced with output from Mark's pciInfo code
          * String vendorName = TheProject.pciNamer("8086", "0180").get(0);
          * String deviceName = TheProject.pciNamer("8086", "0180").get(1);
          * System.out.printf("Vendor: %s%nDevice: %s", vendorName, deviceName);
          */
 
         // Read in data from the CSV file using Scanner
-        Scanner readCsv = new Scanner(new File(".\\project\\PCI-Lookup.csv"));
+        Scanner readCsv = new Scanner(new File("./PCI-Lookup.csv"));
 
-        List<List> pciData = new ArrayList(); // Initialise a 2-dimensional array for database rows and columns
         /*
          * We need to create a 2-dimensional array because of the way the csv file is
          * formatted.
-         * It gives data in the form [vendorID+deviceID, vendor name, device name],
-         * copied from https://pcilookup.com.
+         * The CSV contains data in the form [vendorID+deviceID, vendor name, device
+         * name], copied from https://pcilookup.com.
          * To analyse and get data from this, we need to use nested while loops as
          * below.
          */
+        ArrayList<ArrayList<String>> pciData = new ArrayList<ArrayList<String>>();
 
-        while (readCsv.hasNextLine()) { // while there is still rows to be read...
-            // rowData list is within the while loop because it needs to be reset for every
-            // row
-            List rowData = new ArrayList(); // create an empty list for each string in data row
+        while (readCsv.hasNextLine()) { // while there are still rows to be read...
+            ArrayList<String> rowData = new ArrayList<String>(); // create an empty list for each string in data row
             Scanner separateRowData = new Scanner(readCsv.nextLine()); // read data from the next row
             separateRowData.useDelimiter(","); // separate it using the comma delimiter
             while (separateRowData.hasNext()) {
@@ -143,9 +146,9 @@ public class CS4421GroupProject {
         }
 
         // initialise variables for each dataset
-        ArrayList codesList = new ArrayList<String>();
-        ArrayList vendorsList = new ArrayList<String>();
-        ArrayList devicesList = new ArrayList<String>();
+        ArrayList<String> codesList = new ArrayList<String>();
+        ArrayList<String> vendorsList = new ArrayList<String>();
+        ArrayList<String> devicesList = new ArrayList<String>();
 
         // for loop increments for each item in pciData 2D array
         for (int i = 0; i < pciData.size(); i++) {
@@ -160,7 +163,7 @@ public class CS4421GroupProject {
         // list and runs an error
         try {
             int index = codesList.indexOf(codeNeeded); // find index of codeNeeded against original CSV
-            ArrayList result = new ArrayList<String>();
+            ArrayList<String> result = new ArrayList<String>();
             result.add(vendorsList.get(index)); // use same index to find necessary vendor name
             result.add(devicesList.get(index)); // use same index to fine
             return result;
