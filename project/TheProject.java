@@ -102,6 +102,10 @@ public class TheProject {
         }
     }
 
+    // Note from Bence: It seems like this is loading the ENTIRE .csv into memory.
+    // Could we not just check the Vendor/Device ID against each row as we scan it?
+    // Instead of loading it into a ArrayList and then checking _that_.
+
     public static List<String> pciNamer(String vendorID, String deviceID) throws Exception {
         /*
          * This function takes two inputs for vendor ID and device ID, then returns a
@@ -155,10 +159,11 @@ public class TheProject {
             devicesList.add(pciData.get(i).get(2)); // third column of row i is a device name
         }
 
-        String codeNeeded = vendorID.concat(deviceID); // combine the vendor and device ID into one string to form the
-                                                       // "code"
+        // combine the vendor and device ID into one string to form the "code"
+        String codeNeeded = vendorID.concat(deviceID);
+
         // using a try/catch block in case the code provided is not part of the database
-        // list and runs an error
+        // list and throws an error
         try {
             int index = codesList.indexOf(codeNeeded); // find index of codeNeeded against original CSV
             ArrayList<String> result = new ArrayList<String>();
