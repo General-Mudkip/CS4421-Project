@@ -89,6 +89,9 @@ public class TheProject {
 
         System.out.print("Enter a number: ");
         int submenuChoice = input.nextInt();
+        System.out.print(UserInput + submenuChoice);
+
+        FetchData.subMenu(UserInput, submenuChoice);
 
         // Process submenu options
         if (submenuChoice == 3) {
