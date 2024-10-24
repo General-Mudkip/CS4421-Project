@@ -112,7 +112,10 @@ public class TheProject {
         }
 
         System.out.print("Enter a number: ");
-        int choice = input.nextInt();
+        int submenuChoice = input.nextInt();
+        System.out.print(UserInput + submenuChoice);
+
+        FetchData.subMenu(UserInput, submenuChoice);
 
         switch (choice) {
             case 1:
