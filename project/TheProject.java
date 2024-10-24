@@ -2,8 +2,13 @@ import java.util.Scanner;
 
 public class TheProject {
 
-    public static void menu() { // Danny's function
+    public static void menu() throws Exception { // Danny's function
         Scanner input = new Scanner(System.in);
+
+        // Test code for pciNamer
+        // String vendorName = FetchPciInfo.pciNamer("8086", "0180").get(0);
+        // String deviceName = FetchPciInfo.pciNamer("8086", "0180").get(1);
+        // System.out.printf("Vendor: %s%nDevice: %s%n", vendorName, deviceName);
 
         while (true) {
             System.out.println("Main Menu");
@@ -50,35 +55,21 @@ public class TheProject {
         switch (UserInput) {
             case "CPU_Info":
                 System.out.println("\nCPU Information Menu:");
-                System.out.println("1) View Cores per Socket");
-                System.out.println("2) View Socket Count");
-                System.out.println("3) View Model");
-                System.out.println("4) View L1d Cache Size");
-                System.out.println("5) View L1i Cache Size");
-                System.out.println("6) View L2 Cache Size");
-                System.out.println("7) View L3 Cache Size");
-                System.out.println("8) View User Time");
-                System.out.println("9) View Idle Time");
-                System.out.println("10) View System Time");
-                System.out.println("11) Back to Main Menu");
+                System.out.println("1) View CPU Model");
+                System.out.println("2) View CPU Speed");
+                System.out.println("3) Back to Main Menu");
                 break;
             case "Disk_Info":
                 System.out.println("\nDisk Information Menu:");
                 System.out.println("1) View Disk Capacity");
-                System.out.println("2) View Disk Model");
-                System.out.println("3) View Disk Count");
-                System.out.println("4) View Disk Usage");
-                System.out.println("5) Back to Main Menu");
+                System.out.println("2) View Disk Usage");
+                System.out.println("3) Back to Main Menu");
                 break;
             case "PCI_Info":
                 System.out.println("\nPCI Information Menu:");
-                System.out.println("1) View PCI Bus Count");
-                System.out.println("2) View PCI Device Count");
-                System.out.println("3) View Functions Present");
-                System.out.println("4) View Vendor ID");
-                System.out.println("5) Product ID");
-                System.out.println("6) Back to Main Menu");
-
+                System.out.println("1) View PCI Devices");
+                System.out.println("2) View PCI Bus Info");
+                System.out.println("3) Back to Main Menu");
                 break;
             case "System_Info":
                 System.out.println("\nSystem Information Menu:");
@@ -88,11 +79,9 @@ public class TheProject {
                 break;
             case "USB_Info":
                 System.out.println("\nUSB Information Menu:");
-                System.out.println("1) View USB Device Count");
-                System.out.println("2) View USB Bus Count");
-                System.out.println("3) View Vendor ID");
-                System.out.println("4) View Product ID");
-                System.out.println("5) Back to Main Menu");
+                System.out.println("1) View USB Devices");
+                System.out.println("2) View USB Controller Info");
+                System.out.println("3) Back to Main Menu");
                 break;
             default:
                 System.out.println("Invalid submenu option.");
@@ -101,15 +90,16 @@ public class TheProject {
         System.out.print("Enter a number: ");
         int submenuChoice = input.nextInt();
 
-         {
+        // Process submenu options
+        if (submenuChoice == 3) {
+            return; // Go back to the main menu
+        } else {
             System.out.println("Displaying details for option " + submenuChoice);
             // You can add more specific functionality here for each option
         }
     }
 
-
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         TheProject.menu();
     }
 }
