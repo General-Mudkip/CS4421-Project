@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class CS4421GroupProject {
 
@@ -101,8 +102,8 @@ public class CS4421GroupProject {
         } else {
             System.out.println("Displaying details for option " + submenuChoice);
             // You can add more specific functionality here for each option
-        
         }
+    }
 
     public static List<String> pciNamer(String vendorID, String deviceID) throws Exception {
         /*
@@ -176,6 +177,53 @@ public class CS4421GroupProject {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        TheProject.menu();
+    /* Bence's problem xx
+    public static void getCPUOverTime() throws InterruptedException {
+        // cpuInfo cpu = new cpuInfo();
+        double startTime = System.currentTimeMillis();
+
+        Graph graph = new Graph("Random Walk", "Pos", "Time", "Walk", new double[2], new double[2]);
+        graph.displayGraph();
+
+        ArrayList<ArrayList<Double>> returnValue = new ArrayList<>(2);
+        returnValue.add(new ArrayList<>());
+        returnValue.add(new ArrayList<>());
+
+        int pos = 0;
+        int max = 0;
+        Random rand = new Random();
+        int step;
+
+        for (int counter = 0; counter < 100000; counter++) {
+            double currentTime = (System.currentTimeMillis() - startTime) / 1000;
+
+            boolean bool = rand.nextBoolean();
+            if (bool)
+                step = 1;
+            else
+                step = -1;
+            pos += step;
+            max = Math.max(pos, max);
+
+            returnValue.get(0).add(currentTime);
+            returnValue.get(1).add((double) pos);
+
+            if (returnValue.get(0).size() > 1000) {
+                returnValue.get(0).removeFirst();
+                returnValue.get(1).removeFirst();
+            }
+
+            Thread.sleep(1);
+
+            double[] returnX = returnValue.get(0).stream().mapToDouble(i -> i).toArray();
+            double[] returnY = returnValue.get(1).stream().mapToDouble(i -> i).toArray();
+
+            graph.updateGraph(returnX, returnY);
+        }
     }
+    */
+
+    public static void main(String[] args) throws Exception, InterruptedException {
+            CS4421GroupProject.menu();
+    }
+}

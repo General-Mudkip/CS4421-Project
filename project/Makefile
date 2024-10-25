@@ -5,7 +5,7 @@ HEADERS=$(MODULES:=.h)
 
 MYPROJECT=CS4421GroupProject
 
-all: $(HEADERS) $(MYPROJECT).class libsysinfo/libsysinfo.so
+all: $(HEADERS) CS4421GroupProject.class libsysinfo/libsysinfo.so
 
 $(MYPROJECT).class: $(MYPROJECT).java libsysinfo/libsysinfo.so
 	javac $<

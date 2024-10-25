@@ -22,7 +22,7 @@ public class FetchData {
             if (subChoice == 1){
                 DiskInfo.diskCount();
             } else if (subChoice == 2) {
-                DiskInfo.getModel();
+                DiskInfo.getName();
             } else if (subChoice == 3) {
                 TheProject.menu();
 
