@@ -4,8 +4,7 @@
  *  Copyright (c) 2024 Mark Burkley (mark.burkley@ul.ie)
  */
 
-public class pciInfo 
-{
+public class pciInfo {
     // Refresh the current values and counters - call this before other methods
     public native void read ();
 
@@ -27,4 +26,3 @@ public class pciInfo
     // Return the product ID of a PCI device
     public native int productID (int bus, int device, int function);
 }
-

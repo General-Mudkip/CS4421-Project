@@ -31,7 +31,7 @@ public class FetchPciInfo {
          */
 
         // Read in data from the CSV file using Scanner
-        Scanner readCsv = new Scanner(new File(".\\project\\PCI-Lookup.csv"));
+        Scanner readCsv = new Scanner(new File("/home/skye-fitzpatrick/cs4421/project/PCI-Lookup.csv"));
 
         /*
          * We need to create a 2-dimensional array because of the way the csv file is
