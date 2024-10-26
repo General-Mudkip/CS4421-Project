@@ -24,7 +24,7 @@ public class ReadProc {
                     split[1] = split[1].trim();
 
                     if (split[0].equals("cpuMHz")) {
-                        System.out.println(split[0] + ":::" + split[1]);
+                        System.out.println(split[0] + ": " + split[1]);
                         break;
                     }
                 }

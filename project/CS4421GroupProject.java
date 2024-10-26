@@ -2,17 +2,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Random;
 
 public class CS4421GroupProject {
 
     public static void menu() throws Exception { // Danny's function
         Scanner input = new Scanner(System.in);
-
-        // Test code for pciNamer
-        // String vendorName = TheProject.pciNamer("8086", "0180").get(0);
-        // String deviceName = TheProject.pciNamer("8086", "0180").get(1);
-        // System.out.printf("Vendor: %s%nDevice: %s", vendorName, deviceName);
 
         while (true) {
             System.out.println("Main Menu");
@@ -137,7 +131,7 @@ public class CS4421GroupProject {
         ArrayList<ArrayList<String>> pciData = new ArrayList<ArrayList<String>>();
 
         while (readCsv.hasNextLine()) { // while there are still rows to be read...
-            ArrayList<String> rowData = new ArrayList<String>(); // create an empty list for each string in data row
+            ArrayList<String> rowData = new ArrayList<>(); // create an empty list for each string in data row
             Scanner separateRowData = new Scanner(readCsv.nextLine()); // read data from the next row
             separateRowData.useDelimiter(","); // separate it using the comma delimiter
             while (separateRowData.hasNext()) {
@@ -147,35 +141,49 @@ public class CS4421GroupProject {
         }
 
         // initialise variables for each dataset
-        ArrayList<String> codesList = new ArrayList<String>();
-        ArrayList<String> vendorsList = new ArrayList<String>();
-        ArrayList<String> devicesList = new ArrayList<String>();
+        ArrayList<String> codesList = new ArrayList<>();
+        ArrayList<String> vendorsList = new ArrayList<>();
+        ArrayList<String> devicesList = new ArrayList<>();
 
         // for loop increments for each item in pciData 2D array
-        for (int i = 0; i < pciData.size(); i++) {
-            codesList.add(pciData.get(i).get(0)); // first column of row i is a code
-            vendorsList.add(pciData.get(i).get(1)); // second column of row i is a vendor name
-            devicesList.add(pciData.get(i).get(2)); // third column of row i is a device name
+        for (ArrayList<String> rowData : pciData) {
+            codesList.add(rowData.get(0)); // first column of row is a code
+            vendorsList.add(rowData.get(1)); // second column of row is a vendor name
+            devicesList.add(rowData.get(2)); // third column of row is a device name
         }
 
         String codeNeeded = vendorID.concat(deviceID); // combine the vendor and device ID into one string to form the
-                                                       // "code"
-        // using a try/catch block in case the code provided is not part of the database
-        // list and runs an error
+        // "code" using a try/catch block in case the code provided is not part of the database list and runs an error
         try {
             int index = codesList.indexOf(codeNeeded); // find index of codeNeeded against original CSV
-            ArrayList<String> result = new ArrayList<String>();
+            ArrayList<String> result = new ArrayList<>();
             result.add(vendorsList.get(index)); // use same index to find necessary vendor name
             result.add(devicesList.get(index)); // use same index to fine
             return result;
         } catch (Exception e) {
             // create and return an "error list" if the code doesn't run as expected
-            List<String> error = new ArrayList<String>();
+            List<String> error = new ArrayList<>();
             error.add("Unknown Vendor!");
             error.add("Unknown Device!");
             return error;
         }
     }
+
+    public static void main(String[] args) throws Exception {
+
+        System.loadLibrary("sysinfo");
+        sysInfo info = new sysInfo();
+        FetchMarkInfo.cpu();
+        FetchMarkInfo.pci();
+        FetchMarkInfo.usb();
+        FetchMarkInfo.disk();
+        FetchMarkInfo.memory();
+
+        System.out.print("\n\n\n");
+        CS4421GroupProject.menu();
+
+    }
+}
 
     /* Bence's problem xx
     public static void getCPUOverTime() throws InterruptedException {
@@ -222,8 +230,3 @@ public class CS4421GroupProject {
         }
     }
     */
-
-    public static void main(String[] args) throws Exception, InterruptedException {
-            CS4421GroupProject.menu();
-    }
-}
