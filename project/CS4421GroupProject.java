@@ -5,98 +5,239 @@ import java.util.Scanner;
 
 public class CS4421GroupProject {
 
-    public static void menu() throws Exception { // Danny's function
+    public static void menu() throws Exception {
         Scanner input = new Scanner(System.in);
+
+
 
         while (true) {
             System.out.println("Main Menu");
-            System.out.println("1) CPU Info");
-            System.out.println("2) Disk Info");
-            System.out.println("3) PCI Info");
-            System.out.println("4) System Info");
-            System.out.println("5) USB Info");
-            System.out.println("6) Exit");
-            System.out.print("Enter a number: ");
+            System.out.printf("%-20s %s%n", "1) CPU Info", "2) Disk Info");
+            System.out.printf("%-20s %s%n", "3) PCI Info", "4) System Info");
+            System.out.printf("%-20s %s%n", "5) USB Info", "6) Exit");
 
+            System.out.print("Enter a number: ");
             int number = input.nextInt();
 
-            // Based on the user's choice, call the corresponding submenu.
             switch (number) {
                 case 1:
-                    handleInput("CPU_Info");
+                    handleCPUInfo();
                     break;
                 case 2:
-                    handleInput("Disk_Info");
+                    handleDiskInfo();
                     break;
                 case 3:
-                    handleInput("PCI_Info");
+                    handlePCIInfo();
                     break;
                 case 4:
-                    handleInput("System_Info");
+                    handleSystemInfo();
                     break;
                 case 5:
-                    handleInput("USB_Info");
+                    handleUSBInfo();
                     break;
                 case 6:
                     System.out.println("Exiting...");
-                    return; // Exit the program
+                    return;
                 default:
                     System.out.println("Invalid option. Please try again.");
+            }
+
+            System.out.print("Do you want to return to the main menu? (y/n): ");
+            char returnToMenu = input.next().charAt(0);
+
+            if (returnToMenu == 'n' || returnToMenu == 'N') {
+                System.out.println("Exiting...");
+                return;
             }
         }
     }
 
-    // function to handle the submenu logic
-    public static void handleInput(String UserInput) {
+    // CPU submenu
+    public static void handleCPUInfo() {
         Scanner input = new Scanner(System.in);
 
-        switch (UserInput) {
-            case "CPU_Info":
-                System.out.println("\nCPU Information Menu:");
-                System.out.println("1) View CPU Model");
-                System.out.println("2) View CPU Speed");
-                System.out.println("3) Back to Main Menu");
-                break;
-            case "Disk_Info":
-                System.out.println("\nDisk Information Menu:");
-                System.out.println("1) View Disk Capacity");
-                System.out.println("2) View Disk Usage");
-                System.out.println("3) Back to Main Menu");
-                break;
-            case "PCI_Info":
-                System.out.println("\nPCI Information Menu:");
-                System.out.println("1) View PCI Devices");
-                System.out.println("2) View PCI Bus Info");
-                System.out.println("3) Back to Main Menu");
-                break;
-            case "System_Info":
-                System.out.println("\nSystem Information Menu:");
-                System.out.println("1) View OS Version");
-                System.out.println("2) View System Uptime");
-                System.out.println("3) Back to Main Menu");
-                break;
-            case "USB_Info":
-                System.out.println("\nUSB Information Menu:");
-                System.out.println("1) View USB Devices");
-                System.out.println("2) View USB Controller Info");
-                System.out.println("3) Back to Main Menu");
-                break;
-            default:
-                System.out.println("Invalid submenu option.");
-        }
-
+        System.out.println("\nCPU Information Menu:");
+        System.out.printf("%-25s %s%n", "1) View CPU Model", "2) View Cores per Socket");
+        System.out.printf("%-25s %s%n", "3) View Socket Count", "4) View L1D Cache Size");
+        System.out.printf("%-25s %s%n", "5) View L1I Cache Size", "6) View L2 Cache Size");
+        System.out.printf("%-25s %s%n", "7) View L3 Cache Size", "8) View User Time");
+        System.out.printf("%-25s %s%n", "9) View Idle Time", "10) View System Time");
+        System.out.println("11) Back to Main Menu");
         System.out.print("Enter a number: ");
-        int submenuChoice = input.nextInt();
+        int choice = input.nextInt();
 
-        System.out.print(UserInput + submenuChoice);
-
-        // Process submenu options
-        if (submenuChoice == 3) {
-            return; // Go back to the main menu
-        } else {
-            System.out.println("Displaying details for option " + submenuChoice);
-            // You can add more specific functionality here for each option
+        switch (choice) {
+            case 1:
+                System.out.println("Displaying CPU Model...");
+                break;
+            case 2:
+                System.out.println("Displaying Cores per Socket...");
+                break;
+            case 3:
+                System.out.println("Displaying Socket Count...");
+                break;
+            case 4:
+                System.out.println("Displaying L1D Cache Size...");
+                break;
+            case 5:
+                System.out.println("Displaying L1I Cache Size...");
+                break;
+            case 6:
+                System.out.println("Displaying L2 Cache Size...");
+                break;
+            case 7:
+                System.out.println("Displaying L3 Cache Size...");
+                break;
+            case 8:
+                System.out.println("Displaying User Time...");
+                break;
+            case 9:
+                System.out.println("Displaying Idle Time...");
+                break;
+            case 10:
+                System.out.println("Displaying System Time...");
+                break;
+            case 11:
+                return;
+            default:
+                System.out.println("Invalid choice. Returning to CPU Info Menu...");
         }
+
+        waitForUserInputToContinue();
+    }
+
+    // Disk submenu
+    public static void handleDiskInfo() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nDisk Information Menu:");
+        System.out.printf("%-25s %s%n", "1) View Disk Count", "2) View Disk Model");
+        System.out.printf("%-25s %s%n", "3) View Disk Capacity", "4) View Disk Usage");
+        System.out.println("5) Back to Main Menu");
+        System.out.print("Enter a number: ");
+        int choice = input.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Displaying Disk Count...");
+                break;
+            case 2:
+                System.out.println("Displaying Disk Model...");
+                break;
+            case 3:
+                System.out.println("Displaying Disk Capacity...");
+                break;
+            case 4:
+                System.out.println("Displaying Disk Usage...");
+                break;
+            case 5:
+                return;
+            default:
+                System.out.println("Invalid choice. Returning to Disk Info Menu...");
+        }
+
+        waitForUserInputToContinue();
+    }
+
+    // PCI submenu
+    public static void handlePCIInfo() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nPCI Information Menu:");
+        System.out.printf("%-25s %s%n", "1) View PCI Bus Count", "2) View Device Count");
+        System.out.printf("%-25s %s%n", "3) View Functions Present", "4) View Vendor ID");
+        System.out.printf("%-25s %s%n", "5) View Product ID", "6) Back to Main Menu");
+        System.out.print("Enter a number: ");
+        int choice = input.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Displaying PCI Bus Count...");
+                break;
+            case 2:
+                System.out.println("Displaying Device Count...");
+                break;
+            case 3:
+                System.out.println("Displaying Functions Present...");
+                break;
+            case 4:
+                System.out.println("Displaying Vendor ID...");
+                break;
+            case 5:
+                System.out.println("Displaying Product ID...");
+                break;
+            case 6:
+                return;
+            default:
+                System.out.println("Invalid choice. Returning to PCI Info Menu...");
+        }
+
+        waitForUserInputToContinue();
+    }
+
+    // System submenu
+    public static void handleSystemInfo() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nSystem Information Menu:");
+        System.out.printf("%-25s %s%n", "1) View OS Version", "2) View System Uptime");
+        System.out.println("3) Back to Main Menu");
+        System.out.print("Enter a number: ");
+        int choice = input.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Displaying OS Version...");
+                break;
+            case 2:
+                System.out.println("Displaying System Uptime...");
+                break;
+            case 3:
+                return;
+            default:
+                System.out.println("Invalid choice. Returning to System Info Menu...");
+        }
+
+        waitForUserInputToContinue();
+    }
+
+    // USB submenu
+    public static void handleUSBInfo() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nUSB Information Menu:");
+        System.out.printf("%-25s %s%n", "1) View USB Bus Count", "2) View USB Device Count");
+        System.out.printf("%-25s %s%n", "3) View USB Vendor ID", "4) View USB Product ID");
+        System.out.println("5) Back to Main Menu");
+        System.out.print("Enter a number: ");
+        int choice = input.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Displaying USB Bus Count...");
+                break;
+            case 2:
+                System.out.println("Displaying USB Device Count...");
+                break;
+            case 3:
+                System.out.println("Displaying USB Vendor ID...");
+                break;
+            case 4:
+                System.out.println("Displaying USB Product ID...");
+                break;
+            case 5:
+                return;
+            default:
+                System.out.println("Invalid choice. Returning to USB Info Menu...");
+        }
+
+        waitForUserInputToContinue();
+    }
+
+    public static void waitForUserInputToContinue() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("\nPress Enter to return to Main Menu...");
+        input.nextLine();
     }
 
     public static List<String> pciNamer(String vendorID, String deviceID) throws Exception {
