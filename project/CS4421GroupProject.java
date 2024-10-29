@@ -1,5 +1,6 @@
 import GetSysInfo.MemInfo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CS4421GroupProject {
@@ -107,7 +108,7 @@ public class CS4421GroupProject {
     }
 
     // PCI submenu
-    public static void handlePCIInfo() {
+    public static void handlePCIInfo() throws Exception {
         pciInfo pci = new pciInfo();
         pci.read();
 
@@ -123,11 +124,11 @@ public class CS4421GroupProject {
                     if (pci.functionPresent(i, j, k) > 0) {
                         String vendorID = String.format("%04X", pci.vendorID(i, j, k));
                         String deviceID = String.format("%04X", pci.productID(i, j, k));
-                        //ArrayList<String> result = (ArrayList<String>) FetchPciInfo.pciNamer(vendorID, deviceID);
-                        //String vendorName = result.get(0);
-                        //String deviceName = result.get(1);
-                        System.out.printf("\t\t#%d:\tVendor: %s %n\t\t\tDevice: %s %n",
-                                (k + 1), vendorID, deviceID);
+                        ArrayList<String> result = (ArrayList<String>) FetchPCIData.pciNamer(vendorID, deviceID);
+                        String vendorName = result.get(0);
+                        String deviceName = result.get(1);
+                        System.out.printf("\t\t#%d: Vendor: %s  %s%n\t\t    Device: %s  %s%n",
+                                (k + 1), vendorID, vendorName, deviceID, deviceName);
                     }
                 }
             }
@@ -158,7 +159,7 @@ public class CS4421GroupProject {
     }
 
     // USB submenu
-    public static void handleUSBInfo() {
+    public static void handleUSBInfo() throws Exception {
         usbInfo usb = new usbInfo();
         usb.read();
 
@@ -169,11 +170,11 @@ public class CS4421GroupProject {
             for (int j = 0; j < usb.deviceCount(i); j++) {
                 String vendorID = String.format("%04X", usb.vendorID(i, j));
                 String deviceID = String.format("%04X", usb.productID(i, j));
-                //ArrayList<String> result = (ArrayList<String>) FetchPciInfo.pciNamer(vendorID, deviceID);
-                //String vendorName = result.get(0);
-                //String deviceName = result.get(1);
-                System.out.printf("\t#%d:\tVendor: %s %n\t\tDevice: %s %n",
-                        (j + 1), vendorID, deviceID);
+                ArrayList<String> result = (ArrayList<String>) FetchPCIData.pciNamer(vendorID, deviceID);
+                String vendorName = result.get(0);
+                String deviceName = result.get(1);
+                System.out.printf("\t#%d: Vendor: %s  %s%n\t    Device: %s  %s%n",
+                        (j + 1), vendorID, vendorName, deviceID, deviceName);
             }
         }
 
