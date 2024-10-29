@@ -56,7 +56,11 @@ public class ProcReader {
         return "";
     }
 
-    // Todo: Make another function that only returns data from a specific core
+    /**
+     * Uses the /proc/cpuinfo file to get all of the information about all of the cores.
+     * @return Two (nested) hashmaps. The parent's key is the core number, and its value is all of the information.
+     *         Open /proc/cpuinfo to see all of the value it returns.
+     */
     public static Map<Integer, Map<String, String>> getAllCoresInformation() {
 
         try {
@@ -91,7 +95,9 @@ public class ProcReader {
                     newProcMap = new HashMap<>(); // Resets the map so that we're not adding duplicate information
                     newProcMap.put(split[0], split[1]);
                 } else {
-                    if (!split[0].isEmpty()) { // There are empty lines in the file, which cause an index out of bounds exception
+                    // There are empty lines in the file, which cause an index out of bounds exception if we try to
+                    // access split[0] without first checking if split[0] actually exists.
+                    if (!split[0].isEmpty()) {
                         newProcMap.put(split[0], split[1]); // Add the newly read line's data to the map
                     }
                 }

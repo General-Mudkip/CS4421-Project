@@ -2,10 +2,13 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.QuickChart;
 
+import javax.swing.*;
+
 public class LineGraph {
     // These two are made public, so that they can be situationally modified. (e.g setting the y axis minimum value)
     XYChart chart;
     SwingWrapper<XYChart> sw;
+    JFrame frame;
     private String seriesName;
 
     /**
@@ -26,8 +29,15 @@ public class LineGraph {
         this.sw = new SwingWrapper<>(this.chart); // Used for displaying and updating the chart
     }
 
+    /**
+     * Puts the graph on the user's screen.
+     */
     public void displayGraph() {
-        this.sw.displayChart();
+        this.frame = this.sw.displayChart();
+        javax.swing.SwingUtilities.invokeLater(
+                // Stops the JVM from exiting if the users closes the graph's window.
+                ()->this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)
+        );
     }
 
     // Updates the graph when provided with new data. Can be used for live graphs.

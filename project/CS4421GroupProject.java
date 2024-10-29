@@ -56,25 +56,26 @@ public class CS4421GroupProject {
                 Integer userTime = cpu.getUserTime(j)*10;
                 Integer systemTime =cpu.getSystemTime(j)*10;
 
-                graph.addSeries("Idle Time", idleTime);
-                graph.addSeries("User Time", userTime);
-                graph.addSeries("System Time", systemTime);
+                /**
+                graph.addSeries("Idle Time" + j, idleTime);
+                graph.addSeries("User Time" + j, userTime);
+                graph.addSeries("System Time"+ j, systemTime);
 
                 graph.displayGraph();
-                while (true) {
+                while (graph.frame.isEnabled()) {
                     cpu.read(0);
                     idleTime = cpu.getIdleTime(j)*10;
                     userTime = cpu.getUserTime(j)*10;
                     systemTime =cpu.getSystemTime(j)*10;
 
-                    graph.updateGraph("Idle Time", idleTime);
-                    graph.updateGraph("User Time", userTime);
-                    graph.updateGraph("System Time", systemTime);
+                    graph.updateGraph("Idle Time" + j, idleTime);
+                    graph.updateGraph("User Time" + j, userTime);
+                    graph.updateGraph("System Time" + j, systemTime);
 
                     Thread.sleep(100);
                 }
-                // System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n",
-                //       idleTime, userTime, systemTime);
+                 */
+                 System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n", idleTime, userTime, systemTime);
             }
         }
         Display.GraphCPUClockSpeed();
