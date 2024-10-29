@@ -1,8 +1,7 @@
-import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-public class Graph {
+public class LineGraph {
     // These two are made public, so that they can be situationally modified. (e.g setting the y axis minimum value)
     XYChart chart;
     SwingWrapper<XYChart> sw;
@@ -17,8 +16,8 @@ public class Graph {
      * @param xData The array of X data. <b>Needs to be the same length as yData.</b>
      * @param yData The array of Y data. <b>Needs to be the same length as xData.</b>
      */
-    public Graph(String chartTitle, String xAxisTitle, String yAxisTitle, String seriesName, double[] xData,
-            double[] yData) {
+    public LineGraph(String chartTitle, String xAxisTitle, String yAxisTitle, String seriesName, double[] xData,
+                     double[] yData) {
         this.seriesName = seriesName;
         this.chart = QuickChart.getChart(chartTitle, xAxisTitle, yAxisTitle, seriesName, xData, yData);
 

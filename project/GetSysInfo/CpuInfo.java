@@ -9,9 +9,9 @@ public class CpuInfo {
      * @return The given core's current clock speed.
      */
     public static Double getCoreClockSpeed(Integer core) {
-        // TODO: Actually take into account the provided core. For now, return core 0.
         try {
-            String rawCPUMHz = ProcReader.readData(path, "cpu MHz");
+
+            String rawCPUMHz = ProcReader.getAllCoresInformation().get(core).get("cpu MHz");
             return Double.parseDouble(rawCPUMHz);
         } catch (NumberFormatException e) {
             System.out.println(e);
@@ -62,9 +62,6 @@ public class CpuInfo {
     }
 
     public static void main(String[] args) {
-        System.out.println();
-        System.out.println(getModel());
-        System.out.println(getCoreCount());
-        System.out.println(getThreadCount());
+        System.out.println(ProcReader.getAllCoresInformation().get(3).get("cpu MHz"));
     }
 }

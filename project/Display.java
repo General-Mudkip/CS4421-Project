@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Display {
     public static void GraphCPUClockSpeed() throws InterruptedException {
-        Graph chart = new Graph("CPU MHz", "Time", "MHz", "MHz", new double[2], new double[2]);
+        LineGraph chart = new LineGraph("CPU MHz", "Time", "MHz", "MHz", new double[2], new double[2]);
         chart.displayGraph();
 
         double startTime = System.currentTimeMillis();
