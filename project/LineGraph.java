@@ -1,5 +1,6 @@
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.QuickChart;
 
 public class LineGraph {
     // These two are made public, so that they can be situationally modified. (e.g setting the y axis minimum value)

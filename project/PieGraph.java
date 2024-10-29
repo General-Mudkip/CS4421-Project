@@ -25,4 +25,13 @@ public class PieGraph {
     public void displayGraph() {
         this.sw.displayChart();
     }
+
+    // Updates the graph when provided with new data. Can be used for live graphs.
+    public void updateGraph(String seriesName, Integer value) {
+        // Use invokeLater as Swing runs asynchronously from the main program.
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            this.graph.updatePieSeries(seriesName, value);
+            this.sw.repaintChart(); // Actually pushes these changes to the chart on the user's screen
+        });
+    }
 }

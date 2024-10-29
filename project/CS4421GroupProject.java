@@ -1,3 +1,5 @@
+import GetSysInfo.MemInfo;
+
 import java.util.Scanner;
 
 public class CS4421GroupProject {
@@ -53,12 +55,26 @@ public class CS4421GroupProject {
                 Integer idleTime = cpu.getIdleTime(j)*10;
                 Integer userTime = cpu.getUserTime(j)*10;
                 Integer systemTime =cpu.getSystemTime(j)*10;
+
                 graph.addSeries("Idle Time", idleTime);
                 graph.addSeries("User Time", userTime);
                 graph.addSeries("System Time", systemTime);
+
                 graph.displayGraph();
-                System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n",
-                        idleTime, userTime, systemTime);
+                while (true) {
+                    cpu.read(0);
+                    idleTime = cpu.getIdleTime(j)*10;
+                    userTime = cpu.getUserTime(j)*10;
+                    systemTime =cpu.getSystemTime(j)*10;
+
+                    graph.updateGraph("Idle Time", idleTime);
+                    graph.updateGraph("User Time", userTime);
+                    graph.updateGraph("System Time", systemTime);
+
+                    Thread.sleep(100);
+                }
+                // System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n",
+                //       idleTime, userTime, systemTime);
             }
         }
         Display.GraphCPUClockSpeed();
@@ -126,8 +142,13 @@ public class CS4421GroupProject {
         memInfo mem = new memInfo();
         mem.read();
 
-        System.out.printf("There are %d bytes of memory, %d bytes of which are being used%n",
-                mem.getTotal(), mem.getUsed());
+        System.out.printf(
+                "There are %d bytes of memory, %d bytes of which are being used%n",
+                mem.getTotal(),
+                mem.getUsed()
+        );
+
+        System.out.println(MemInfo.getActive());
 
         Scanner input = new Scanner(System.in);
         System.out.print("\nPress Enter to return to main menu...");

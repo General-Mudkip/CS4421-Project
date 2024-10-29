@@ -2,7 +2,6 @@ package GetSysInfo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -38,8 +37,6 @@ public class ProcReader {
                 if (split.length > 1) {
                     split[1] = split[1].trim();
                 }
-
-                System.out.println(Arrays.toString(split));
 
                 // If the data
                 if (split[0].equals(searchQuery)) {
