@@ -31,7 +31,7 @@ public class CS4421GroupProject {
     }
 
     // CPU submenu
-    public static void handleCPUInfo() throws InterruptedException {;
+    public static void handleCPUInfo() throws InterruptedException {
         cpuInfo cpu = new cpuInfo();
         cpu.read(0);
         // note the getModel() method returns a string AND a newline
@@ -45,11 +45,20 @@ public class CS4421GroupProject {
         // Sleep for 1 second and display the idle time percentage. This assumes 10Hz so in one second we have 100
         cpu.read(1);
 
+
         for (int i = 0; i < cpu.socketCount(); i++) {
+            PieGraph graph = new PieGraph("Idle Times");
             for (int j = 0; j < cpu.coresPerSocket(); j++) {
                 System.out.printf("CPU socket %d, Core %d:%n", i+1, j+1);
+                Integer idleTime = cpu.getIdleTime(j)*10;
+                Integer userTime = cpu.getUserTime(j)*10;
+                Integer systemTime =cpu.getSystemTime(j)*10;
+                graph.addSeries("Idle Time", idleTime);
+                graph.addSeries("User Time", userTime);
+                graph.addSeries("System Time", systemTime);
+                graph.displayGraph();
                 System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n",
-                        cpu.getIdleTime(j)*10, cpu.getUserTime(j)*10, cpu.getSystemTime(j)*10);
+                        idleTime, userTime, systemTime);
             }
         }
         Display.GraphCPUClockSpeed();
