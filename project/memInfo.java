@@ -6,10 +6,10 @@
 
 public class memInfo {
     // Refresh the current values and counters - call this before other methods
-    public native void read();
+    public native void read ();
 
-    public native int getTotal();
+    public native int getTotal ();
 
-    public native int getUsed();
+    public native int getUsed ();
 }
 
