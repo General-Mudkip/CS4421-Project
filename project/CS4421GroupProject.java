@@ -15,7 +15,7 @@ public class CS4421GroupProject {
         while (true) {
             clearScreen();
             System.out.println("\tSYSTEM INFORMATION MAIN MENU");
-            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n", "\t\t1) CPU Info", "\t\t2) Disk Info",
+            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "\t\t1) CPU Info", "\t\t2) Disk Info",
                     "\t\t3) PCI Info", "\t\t4) Memory Info", "\t\t5) USB Info","\t\t6) Process Info", "\t\t7) Exit");
 
             System.out.print("Enter a number: ");
@@ -246,7 +246,7 @@ public class CS4421GroupProject {
 
         Scanner input = new Scanner(System.in);
         System.out.println("\n\nUSB INFO SUBMENU");
-        System.out.print("1) Return to main menu\n\t2) See additional information about usb\n");
+        System.out.print("\t1) Return to main menu\n\t2) See additional information about usb\n");
         System.out.print("Enter a number: ");
         String choice = input.nextLine();
         while (!(choice.equals("1") | choice.equals("2"))) {
