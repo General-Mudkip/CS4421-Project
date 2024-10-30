@@ -1,8 +1,10 @@
 import GetSysInfo.CpuInfo;
+import GetSysInfo.MemInfo;
+
 import java.util.ArrayList;
 
 public class Display {
-    public static void GraphCPUClockSpeed() throws InterruptedException {
+    public static void graphCPUClockSpeed() throws InterruptedException {
         // Create the line graph with all of the necessary information, providing two empty double arrays because
         // we don't have any information yet.
         LineGraph chart = new LineGraph("CPU MHz", "Time", "MHz", "MHz", new double[2], new double[2]);
@@ -54,6 +56,42 @@ public class Display {
             // Pushes the new data to the chart, and updates the graph.
             chart.updateGraph(returnX, returnY);
         }
+    }
 
+    public static void graphIdleTime(cpuInfo cpu) throws InterruptedException {
+        PieGraph graph = new PieGraph("Idle Times");
+
+        graph.addSeries("Idle Time", 0);
+        graph.addSeries("User Time", 0);
+        graph.addSeries("System Time", 0);
+
+        graph.displayGraph();
+        while (graph.frame.isShowing()) {
+            cpu.read(0);
+            double idleTime = cpu.getIdleTime(0)*10;
+            double userTime = cpu.getUserTime(0)*10;
+            double systemTime =cpu.getSystemTime(0)*10;
+
+            graph.updateGraph("Idle Time", (int) idleTime);
+            graph.updateGraph("User Time", (int) userTime);
+            graph.updateGraph("System Time", (int) systemTime);
+
+            Thread.sleep(100);
+        }
+    }
+
+    public static void graphMemoryShare() throws InterruptedException {
+        PieGraph graph = new PieGraph("Memory Share");
+
+        graph.addSeries("Available Memory", 0);
+        graph.addSeries("Used Memory", 0);
+
+        graph.displayGraph();
+        while (graph.frame.isShowing()) {
+            graph.updateGraph("Available Memory", MemInfo.getMemAvailable());
+            graph.updateGraph("Used Memory", MemInfo.getMemTotal() - MemInfo.getMemAvailable());
+
+            Thread.sleep(100);
+        }
     }
 }

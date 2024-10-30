@@ -1,7 +1,12 @@
+import GetSysInfo.CpuInfo;
 import GetSysInfo.MemInfo;
+import GetSysInfo.ProcessInfo;
+
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
+// Bence: IDEALLY this should be broken up into multiple classes. Would do this if we had the time
 public class CS4421GroupProject {
 
     public static void clearScreen() { System.out.print("\033\143");}
@@ -9,15 +14,17 @@ public class CS4421GroupProject {
     public static void menu() throws Exception {
         Scanner input = new Scanner(System.in);
 
+        // Bence: IDEALLY I'd extract this menu logic out into another function, but passing functions as parameters is
+        // a massive pain.
         while (true) {
             clearScreen();
             System.out.println("\tSYSTEM INFORMATION MAIN MENU");
             System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n", "\t\t1) CPU Info", "\t\t2) Disk Info",
-                    "\t\t3) PCI Info", "\t\t4) Memory Info", "\t\t5) USB Info", "\t\t6) Exit");
+                    "\t\t3) PCI Info", "\t\t4) Memory Info", "\t\t5) USB Info","\t\t6) Process Info", "\t\t7) Exit");
 
             System.out.print("Enter a number: ");
             String str = input.nextLine();
-            while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4") | str.equals("5") | str.equals("6"))) {
+            while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4") | str.equals("5") | str.equals("6") | str.equals("7"))) {
                 System.out.println("Invalid option. Please try again.");
                 System.out.print("Enter a number: ");
                 str = input.nextLine();
@@ -29,79 +36,82 @@ public class CS4421GroupProject {
                 case "3": handlePCIInfo(); break;
                 case "4": handleMemoryInfo(); break;
                 case "5": handleUSBInfo(); break;
-                case "6": System.out.println("Exiting...\nThank you!! :)"); return;
+                case "6": clearScreen(); handleProcessInfo(); break;
+                case "7": System.out.println("Exiting...\nThank you!! :)"); return;
             }
         }
     }
 
     // CPU submenu
     public static void handleCPUInfo() throws InterruptedException {
+        clearScreen();
+        Scanner input = new Scanner(System.in); // To be used for menu user input collection
+
+        // Read information from the CPU via Mark's library
         cpuInfo cpu = new cpuInfo();
         cpu.read(0);
-        // note the getModel() method returns a string AND a newline
+
+        // Note the getModel() method returns a string AND a newline
+        System.out.println("Your computer has been on for " + CpuInfo.getUptime() + " seconds.");
+        System.out.println("That's about " + (int) (CpuInfo.getUptime() / 60 )+ " minutes, or " + (int) (CpuInfo.getUptime() / 3600 ) + " hours.\n\n");
         System.out.print("CPU Model: " + cpu.getModel());
         System.out.println("CPU Sockets: " + cpu.socketCount());
         System.out.println("Cores Per Socket: " + cpu.coresPerSocket());
-        System.out.println("L1 Data Cache Size: " + cpu.l1dCacheSize());
-        System.out.println("L1 Instruction Cache Size: " + cpu.l1iCacheSize());
-        System.out.println("L2 Cache Size: " + cpu.l2CacheSize());
-        System.out.println("L3 Cache Size: " + cpu.l3CacheSize());
-        // Sleep for 1 second and display the idle time percentage. This assumes 10Hz so in one second we have 100
-        cpu.read(1);
+        System.out.println("Threads: " + CpuInfo.getThreadCount()); // From /proc/
+        System.out.println("\nL1 Data Cache Size: " + cpu.l1dCacheSize() + " kB");
+        System.out.println("L1 Instruction Cache Size: " + cpu.l1iCacheSize() + "kB");
+        System.out.println("L2 Cache Size: " + cpu.l2CacheSize() + " kB");
+        System.out.println("L3 Cache Size: " + cpu.l3CacheSize() + " kB");
 
 
-        for (int i = 0; i < cpu.socketCount(); i++) {
-            PieGraph graph = new PieGraph("Idle Times");
-            for (int j = 0; j < cpu.coresPerSocket(); j++) {
-                System.out.printf("CPU socket %d, Core %d:%n", i + 1, j + 1);
-                Integer idleTime = cpu.getIdleTime(j) * 10;
-                Integer userTime = cpu.getUserTime(j) * 10;
-                Integer systemTime = cpu.getSystemTime(j) * 10;
-                if (!(idleTime == 0 & userTime == 0 & systemTime == 0)) {
-                    double total = idleTime + userTime + systemTime;
-                    System.out.printf("\tIdle time\t%-4d milliseconds\t%f%%%n\tUser time\t%-4d milliseconds\t%f%%" +
-                                    "%n\tSystem time\t%-4d milliseconds\t%f%%%n", idleTime, (idleTime / total) * 100,
-                            userTime, (userTime/ total) * 100, systemTime, (systemTime / total) * 100);
-                } else {
-                    System.out.printf("\tIdle time\t%-4d milliseconds%n\tUser time\t%-4d milliseconds%n\t" +
-                            "System time\t%-4d milliseconds%n", idleTime, userTime, systemTime);
-                }
-                /*
-                graph.addSeries("Idle Time" + j, idleTime);
-                graph.addSeries("User Time" + j, userTime);
-                graph.addSeries("System Time"+ j, systemTime);
+        // THE SUBMENU LOGIC
+        System.out.println("\n\nCPU INFO SUBMENU");
 
-                graph.displayGraph();
-                while (graph.frame.isEnabled()) {
-                    cpu.read(0);
-                    idleTime = cpu.getIdleTime(j)*10;
-                    userTime = cpu.getUserTime(j)*10;
-                    systemTime =cpu.getSystemTime(j)*10;
+        System.out.printf("%s%n%s%n%s%n%s%n", "\t\t1) CPU Clock Speed (Graph)", "\t\t2) Core Idle Time (Graph)",
+                "\t\t3) Output All Core Idle Times", "\t\t4) Return to main menu");
 
-                    graph.updateGraph("Idle Time" + j, idleTime);
-                    graph.updateGraph("User Time" + j, userTime);
-                    graph.updateGraph("System Time" + j, systemTime);
-
-                    Thread.sleep(100);
-                }
-                 */
-            }
-        }
-        //Display.GraphCPUClockSpeed();
-
-        Scanner input = new Scanner(System.in);
-        System.out.print("\n1) Return to main menu\n2) See additional information about CPU\n");
         System.out.print("Enter a number: ");
-        String choice = input.nextLine();
-        while (!(choice.equals("1") | choice.equals("2"))) {
-            System.out.println("Error, please enter only 1 or 2! ");
+        String str = input.nextLine();
+        while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4"))) {
+            System.out.println("Invalid option. Please try again.");
             System.out.print("Enter a number: ");
-            choice = input.nextLine();
+            str = input.nextLine();
         }
-        switch (choice) {
-            case "1": clearScreen(); return;
-            case "2": ExtraInfoMenu.displayCPUInfo();
+        clearScreen();
+        switch (str) {
+            case "1":
+                System.out.println("Displaying clock speed...");
+                Display.graphCPUClockSpeed();
+                break;
+            case "2":
+                System.out.println("Displaying idle times...");
+                cpu.read(1);
+                Display.graphIdleTime(cpu); break;
+            case "3":
+                for (int i = 0; i < cpu.socketCount(); i++) {
+                    for (int j = 0; j < cpu.coresPerSocket(); j++) {
+                        System.out.printf("CPU socket %d, Core %d:%n", i + 1, j + 1);
+                        Integer idleTime = cpu.getIdleTime(j) * 10;
+                        Integer userTime = cpu.getUserTime(j) * 10;
+                        Integer systemTime = cpu.getSystemTime(j) * 10;
+                        if (!(idleTime == 0 & userTime == 0 & systemTime == 0)) {
+                            double total = idleTime + userTime + systemTime;
+                            System.out.printf("\tIdle time\t%-4d milliseconds\t%f%%%n\tUser time\t%-4d milliseconds\t%f%%" +
+                                            "%n\tSystem time\t%-4d milliseconds\t%f%%%n", idleTime, (idleTime / total) * 100,
+                                    userTime, (userTime/ total) * 100, systemTime, (systemTime / total) * 100);
+                        } else {
+                            System.out.printf("\tIdle time\t%-4d milliseconds%n\tUser time\t%-4d milliseconds%n\t" +
+                                    "System time\t%-4d milliseconds%n", idleTime, userTime, systemTime);
+                        }
+                    }
+                }
+                System.out.println("\n\nReturn to menu? Hit enter.");
+                input.nextLine();
+            case "4": System.out.println("Exiting...\nThank you!! :)"); return;
         }
+
+        // Recursively call the function. fun!
+        handleCPUInfo();
     }
 
     // Disk submenu
@@ -176,38 +186,42 @@ public class CS4421GroupProject {
     }
 
     // System submenu
-    public static void handleMemoryInfo() {
+    public static void handleMemoryInfo() throws InterruptedException {
+        clearScreen();
+        Scanner input = new Scanner(System.in); // To be used for menu user input collection
+
         memInfo mem = new memInfo();
         mem.read();
 
         System.out.printf(
-                "There are %d bytes of memory, %d bytes of which are being used%n",
-                mem.getTotal(),
-                mem.getUsed()
+                "There are %f Gigabytes of memory, %f Gigabytes of which are being used%n",
+                mem.getTotal() / 1000000.0,
+                mem.getUsed() / 1000000.0
         );
 
-        System.out.println(MemInfo.getMemFree());
-        System.out.println(MemInfo.getMemAvailable());
-        System.out.println(MemInfo.getCached());
-        System.out.println(MemInfo.getBuffers());
-        System.out.println(MemInfo.getActive());
-        System.out.println(MemInfo.getInactive());
-        System.out.println(MemInfo.getSwapTotal());
-        System.out.println(MemInfo.getSwapFree());
+        System.out.println("\n\nMEMORY INFO SUBMENU");
 
-        Scanner input = new Scanner(System.in);
-        System.out.print("\n1) Return to main menu\n2) See additional information about memory\n");
+        System.out.printf("%s%n%s%n", "\t\t1) Used/Available Memory Share (Graph)", "\t\t2) Return to main menu");
+
         System.out.print("Enter a number: ");
-        String choice = input.nextLine();
-        while (!(choice.equals("1") | choice.equals("2"))) {
-            System.out.println("Error, please enter only 1 or 2! ");
+        String str = input.nextLine();
+        while (!(str.equals("1") | str.equals("2"))) {
+            System.out.println("Invalid option. Please try again.");
             System.out.print("Enter a number: ");
-            choice = input.nextLine();
+            str = input.nextLine();
         }
-        switch (choice) {
-            case "1": clearScreen(); return;
-            case "2": ExtraInfoMenu.displayMemoryInfo();
+        clearScreen();
+        switch (str) {
+            case "1":
+                System.out.println("Displaying memory share graph...");
+                Display.graphMemoryShare();
+                break;
+            case "2":
+                System.out.println("Exiting...\nThank you!! :)");
+                return;
         }
+
+        handleMemoryInfo();
     }
 
     // USB submenu
@@ -245,6 +259,57 @@ public class CS4421GroupProject {
         }
     }
 
+    public static void handleProcessInfo() throws InterruptedException {
+        Scanner input = new Scanner(System.in); // To be used for menu user input collection
+        ArrayList<String> processes = ProcessInfo.getAllProcessIDs();
+
+        System.out.println("ALL PROCESSES: \n");
+        System.out.println(processes);
+
+        System.out.println("\n\nPROCESS INFO SUBMENU");
+
+        System.out.println("Enter a process ID from above, or 0 to exit.");
+
+
+        String enteredProcess = input.nextLine();
+
+        while (!enteredProcess.equals("0")) {
+
+            while (!processes.contains(enteredProcess)) {
+                System.out.println("Invalid option. Please try again.");
+                System.out.print("Enter a number: ");
+                enteredProcess = input.nextLine();
+            }
+
+            clearScreen();
+            String[] dataPoint = new String[] {"Name", "Parent ID", "State", "Thread Count", "Virtual Memory Peak", "Virtual Memory Size", "Virtual Memory Heap Size", "Virtual Memory Stack Size"};
+            String[] dataValues = new String[8];
+
+            System.out.println("|================================================|");
+            String header = String.format("| %-28s | %-15s |", "Datapoint", "Value");
+            System.out.println(header);
+            System.out.println("|================================================|");
+            dataValues[0] = ProcessInfo.getProcessName(enteredProcess);
+            dataValues[1] = ProcessInfo.getParentProcesId(enteredProcess);
+            dataValues[2] = ProcessInfo.getProcessState(enteredProcess);
+            dataValues[3] = ProcessInfo.getProcessThreads(enteredProcess);
+            dataValues[4] = ProcessInfo.getProcessVirtualMemoryPeak(enteredProcess);
+            dataValues[5] = ProcessInfo.getProcessVirtualMemorySize(enteredProcess);
+            dataValues[6] = ProcessInfo.getProcessVirtualMemoryHeapSize(enteredProcess);
+            dataValues[7] = ProcessInfo.getProcessVirtualMemoryStackSize(enteredProcess);
+
+            for (int i = 0; i < dataValues.length; i++) {
+                String formattedRow = String.format("| %-28s | %-15s |", dataPoint[i], dataValues[i]);
+                System.out.println(formattedRow);
+            }
+            System.out.println("|================================================|");
+
+            System.out.print("\n\n");
+
+            handleProcessInfo();
+        }
+
+    }
     public static void main(String[] args) throws Exception {
         // Load in Mark's library
         System.loadLibrary("sysinfo");

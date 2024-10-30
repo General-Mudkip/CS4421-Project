@@ -10,7 +10,6 @@ public class CpuInfo {
      */
     public static Double getCoreClockSpeed(Integer core) {
         try {
-
             String rawCPUMHz = ProcReader.getAllCoresInformation().get(core).get("cpu MHz");
             return Double.parseDouble(rawCPUMHz);
         } catch (NumberFormatException e) {
@@ -45,6 +44,10 @@ public class CpuInfo {
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Double getUptime() {
+        return ProcReader.getUptime();
     }
 
     /**

@@ -3,11 +3,24 @@ package GetSysInfo;
 public class MemInfo {
     private static String path = "/proc/meminfo";
 
-    public static String getMemFree() {
+    private static String removeKB(String toRemove) {
+        return toRemove.replace(" kB", "");
+    }
 
+    public static Integer getMemTotal() {
+        try {
+            String rawMemTotal = ProcReader.readData(path, "MemTotal");
+            return Integer.parseInt( removeKB(rawMemTotal));
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Integer getMemFree() {
         try {
             String rawMemFree = ProcReader.readData(path, "MemFree");
-            return rawMemFree;
+            return Integer.parseInt( removeKB(rawMemFree));
         } catch (NumberFormatException e) {
             System.out.println(e);
             throw new RuntimeException(e);
@@ -15,10 +28,10 @@ public class MemInfo {
     }
 
 
-    public static String getMemAvailable() {
+    public static Integer getMemAvailable() {
         try {
             String rawMemAvailable = ProcReader.readData(path, "MemAvailable");
-            return rawMemAvailable;
+            return Integer.parseInt(removeKB(rawMemAvailable));
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }

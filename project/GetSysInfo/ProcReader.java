@@ -56,6 +56,36 @@ public class ProcReader {
         return "";
     }
 
+    public static Double getUptime() {
+        try {
+            // Open the file and get it ready to read
+            File proc = new File("/proc/uptime");
+            Scanner reader = new Scanner(proc);
+
+            // hasNextLine() is a boolean that will be true while there are still lines to read.
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                // The file lines have three pieces of info (usually):
+                // [Name of data] [a lot of spaces] : [Data]
+                // In this case we couldn't use a single space as the delimiter, since that'd
+                // split the line into a ton of empty strings. The following code splits the
+                // line by whitespace, regardless of the length of the whitespace.
+                String[] split = data.split(" ");
+
+                return Double.parseDouble(split[0]);
+            }
+
+            reader.close();
+        } catch (FileNotFoundException e) {
+            // I dislike throwing errors inside deeply nested functions like this, but
+            // it will do for a simple project like this.
+            System.out.println("Error occured!.");
+            e.printStackTrace();
+        }
+
+        return 0.0;
+    }
+
     /**
      * Uses the /proc/cpuinfo file to get all of the information about all of the cores.
      * @return Two (nested) hashmaps. The parent's key is the core number, and its value is all of the information.
