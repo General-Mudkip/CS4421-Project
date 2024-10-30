@@ -1,9 +1,6 @@
 import GetSysInfo.CpuInfo;
-import GetSysInfo.MemInfo;
 import GetSysInfo.ProcessInfo;
-
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 // Bence: IDEALLY this should be broken up into multiple classes. Would do this if we had the time
@@ -238,7 +235,7 @@ public class CS4421GroupProject {
             for (int j = 0; j < usb.deviceCount(i); j++) {
                 String vendorID = String.format("%04X", usb.vendorID(i, j));
                 String deviceID = String.format("%04X", usb.productID(i, j));
-                ArrayList<String> result = (ArrayList<String>) FetchPCIData.pciNamer(vendorID, deviceID);
+                ArrayList<String> result = FetchPCIData.pciNamer(vendorID, deviceID);
                 String vendorName = result.get(0);
                 String deviceName = result.get(1);
                 System.out.printf("\t#%d: Vendor: %s  %s%n\t    Device: %s  %s%n",
