@@ -1,5 +1,4 @@
 import GetSysInfo.MemInfo;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,15 +10,20 @@ public class CS4421GroupProject {
 
     public static void menu() throws Exception {
         Scanner input = new Scanner(System.in);
-        clearScreen();
 
         while (true) {
+            clearScreen();
             System.out.println("\tSYSTEM INFORMATION MAIN MENU");
             System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n", "\t\t1) CPU Info", "\t\t2) Disk Info",
                     "\t\t3) PCI Info", "\t\t4) Memory Info", "\t\t5) USB Info", "\t\t6) Exit");
 
             System.out.print("Enter a number: ");
             String str = input.nextLine();
+            while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4") | str.equals("5") | str.equals("6"))) {
+                System.out.println("Invalid option. Please try again.");
+                System.out.print("Enter a number: ");
+                str = input.nextLine();
+            }
             clearScreen();
             switch (str) {
                 case "1": handleCPUInfo(); break;
@@ -27,8 +31,7 @@ public class CS4421GroupProject {
                 case "3": handlePCIInfo(); break;
                 case "4": handleMemoryInfo(); break;
                 case "5": handleUSBInfo(); break;
-                case "6": System.out.println("Exiting..."); return;
-                default: System.out.println("Invalid option. Please try again.\n");
+                case "6": System.out.println("Exiting...\nThank you!! :)"); return;
             }
         }
     }
@@ -79,12 +82,21 @@ public class CS4421GroupProject {
                  System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n", idleTime, userTime, systemTime);
             }
         }
-        Display.GraphCPUClockSpeed();
+        //Display.GraphCPUClockSpeed();
 
         Scanner input = new Scanner(System.in);
-        System.out.print("\nPress Enter to return to main menu...");
-        input.nextLine();
-        clearScreen();
+        System.out.print("\n1) Return to main menu\n2) See additional information about CPU\n");
+        System.out.print("Enter a number: ");
+        String choice = input.nextLine();
+        while (!(choice.equals("1") | choice.equals("2"))) {
+            System.out.println("Error, please enter only 1 or 2! ");
+            System.out.print("Enter a number: ");
+            choice = input.nextLine();
+        }
+        switch (choice) {
+            case "1": clearScreen(); return;
+            case "2": ExtraInfoMenu.displayCPUInfo();
+        }
     }
 
     // Disk submenu
@@ -102,9 +114,18 @@ public class CS4421GroupProject {
         System.out.println("-----------------------------------------------------------------------");
 
         Scanner input = new Scanner(System.in);
-        System.out.print("\nPress Enter to return to main menu...");
-        input.nextLine();
-        clearScreen();
+        System.out.print("\n1) Return to main menu\n2) See additional information about disk\n");
+        System.out.print("Enter a number: ");
+        String choice = input.nextLine();
+        while (!(choice.equals("1") | choice.equals("2"))) {
+            System.out.println("Error, please enter only 1 or 2! ");
+            System.out.print("Enter a number: ");
+            choice = input.nextLine();
+        }
+        switch (choice) {
+            case "1": clearScreen(); return;
+            case "2": ExtraInfoMenu.displayDiskInfo();
+        }
     }
 
     // PCI submenu
@@ -134,9 +155,18 @@ public class CS4421GroupProject {
             }
         }
         Scanner input = new Scanner(System.in);
-        System.out.print("\nPress Enter to return to main menu...");
-        input.nextLine();
-        clearScreen();
+        System.out.print("\n1) Return to main menu\n2) See additional information about PCI\n");
+        System.out.print("Enter a number: ");
+        String choice = input.nextLine();
+        while (!(choice.equals("1") | choice.equals("2"))) {
+            System.out.println("Error, please enter only 1 or 2! ");
+            System.out.print("Enter a number: ");
+            choice = input.nextLine();
+        }
+        switch (choice) {
+            case "1": clearScreen(); return;
+            case "2": ExtraInfoMenu.displayPCIInfo();
+        }
     }
 
     // System submenu
@@ -160,9 +190,18 @@ public class CS4421GroupProject {
         System.out.println(MemInfo.getSwapFree());
 
         Scanner input = new Scanner(System.in);
-        System.out.print("\nPress Enter to return to main menu...");
-        input.nextLine();
-        clearScreen();
+        System.out.print("\n1) Return to main menu\n2) See additional information about memory\n");
+        System.out.print("Enter a number: ");
+        String choice = input.nextLine();
+        while (!(choice.equals("1") | choice.equals("2"))) {
+            System.out.println("Error, please enter only 1 or 2! ");
+            System.out.print("Enter a number: ");
+            choice = input.nextLine();
+        }
+        switch (choice) {
+            case "1": clearScreen(); return;
+            case "2": ExtraInfoMenu.displayMemoryInfo();
+        }
     }
 
     // USB submenu
@@ -186,9 +225,18 @@ public class CS4421GroupProject {
         }
 
         Scanner input = new Scanner(System.in);
-        System.out.print("\nPress Enter to return to main menu...");
-        input.nextLine();
-        clearScreen();
+        System.out.print("\n1) Return to main menu\n2) See additional information about usb\n");
+        System.out.print("Enter a number: ");
+        String choice = input.nextLine();
+        while (!(choice.equals("1") | choice.equals("2"))) {
+            System.out.println("Error, please enter only 1 or 2! ");
+            System.out.print("Enter a number: ");
+            choice = input.nextLine();
+        }
+        switch (choice) {
+            case "1": clearScreen(); return;
+            case "2": ExtraInfoMenu.displayUSBInfo();
+        }
     }
 
     public static void main(String[] args) throws Exception {

@@ -1,48 +1,10 @@
 import java.util.Scanner;
 
 public class ExtraInfoMenu {
-    public static void menu() {
-        Scanner input = new Scanner(System.in);
-
-        while (true) {
-            clearScreen();
-            System.out.println("Extra Information Main Menu");
-            System.out.printf("%-20s %s%n", "1) CPU Info", "2) Disk Info");
-            System.out.printf("%-20s %s%n", "3) PCI Info", "4) System Info");
-            System.out.printf("%-20s %s%n", "5) USB Info", "6) Exit");
-
-            System.out.print("Enter a number: ");
-            int number = input.nextInt();
-
-            switch (number) {
-                case 1:
-                    displayCPUInfo(input);
-                    break;
-                case 2:
-                    displayDiskInfo(input);
-                    break;
-                case 3:
-                    displayPCIInfo(input);
-                    break;
-                case 4:
-                    displayMemoryInfo(input);
-                    break;
-                case 5:
-                    displayUSBInfo(input);
-                    break;
-                case 6:
-                    System.out.println("Exiting...");
-                    input.close();  // Close scanner before exiting
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-        }
-    }
 
     // CPU information
-    public static void displayCPUInfo(Scanner input) {
-        clearScreen();
+    public static void displayCPUInfo() {
+        CS4421GroupProject.clearScreen();
         System.out.println("\nCPU Information:");
         System.out.println("A CPU socket: is the physical interface on a motherboard " +
                 "where a CPU is installed, allowing it to connect with other components in the computer.");
@@ -64,67 +26,55 @@ public class ExtraInfoMenu {
                 " and kernel operations, which are managed by the operating system.");
         System.out.println("CPU clock speed: is the frequency at which a processor executes instructions," +
                 " typically measured in gigahertz (GHz), indicating how many cycles per second it can perform.");
-        returnToMenuPrompt(input);
+        returnToMenuPrompt();
     }
 
     // disk information
-    public static void displayDiskInfo(Scanner input) {
-        clearScreen();
+    public static void displayDiskInfo() {
+        CS4421GroupProject.clearScreen();
         System.out.println("\nDisk Information:");
         System.out.println("A disk is a storage device used to store and retrieve digital data");
         System.out.println("The different disk types include Hard Disk Drives (HDDs), Solid State Drives (SSDs)," +
                 " Hybrid Drives (SSHDs), and External Hard Drives.");
-
-
-        returnToMenuPrompt(input);
+        returnToMenuPrompt();
     }
 
     // PCI information
-    public static void displayPCIInfo(Scanner input) {
-        clearScreen();
+    public static void displayPCIInfo() {
+        CS4421GroupProject.clearScreen();
         System.out.println("\nPCI Information:");
         System.out.println("A PCI bus: connects peripheral devices to a" +
                 " computer's motherboard for data transfer.");
         System.out.println("A PCI device: is a hardware component that connects to the PCI bus of a computer" +
                 " to add functionality, like graphics cards or network cards.");
-
-
-        returnToMenuPrompt(input);
+        returnToMenuPrompt();
     }
 
-    // Memory information
-    public static void displayMemoryInfo(Scanner input) {
-        clearScreen();
+    // System information
+    public static void displayMemoryInfo() {
+        CS4421GroupProject.clearScreen();
         System.out.println("\nMemory Information:");
         System.out.println("Memory is hardware that stores data and instructions in a computer.");
         System.out.println("The types of memory include RAM, ROM, cache, and flash memory.");
         System.out.println("Memory can be categorized into volatile (like RAM) and non-volatile (like SSDs)," +
                 " with each type serving different functions in data storage and processing.");
-
-
-        returnToMenuPrompt(input);
+        returnToMenuPrompt();
     }
 
     // USB information
-    public static void displayUSBInfo(Scanner input) {
-        clearScreen();
+    public static void displayUSBInfo() {
+        CS4421GroupProject.clearScreen();
         System.out.println("\nUSB Information:");
         System.out.println("USB (Universal Serial Bus) is a standard interface used" +
                 " for connecting peripherals to computers and transferring data or providing power.");
-
-
-        returnToMenuPrompt(input);
+        returnToMenuPrompt();
     }
 
     // method to prompt the user to return to the main menu
-    public static void returnToMenuPrompt(Scanner input) {
-        clearScreen();
-        System.out.print("Press Enter to return to the main menu...");
-        System.out.println("");
+    public static void returnToMenuPrompt() {
+        System.out.println("\nPress Enter to return to the main menu...");
+        Scanner input = new Scanner(System.in);
         input.nextLine();
-    }
-
-    public static void main(String[] args) {
-        menu();
+        CS4421GroupProject.clearScreen();
     }
 }
