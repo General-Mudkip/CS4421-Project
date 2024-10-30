@@ -33,7 +33,7 @@ public class DisplayMemory {
             Thread.sleep(100);
 
             // Gets the provided core's clock speed.
-            double cpuMHz = memInfo.getused(0);
+            double cpuMHz = memInfo.getUsed(0);
 
             // Add the elapsedTime (X value) and cpuMHz (Y value) to the array list
             returnValue.get(0).add(elapsedTime);

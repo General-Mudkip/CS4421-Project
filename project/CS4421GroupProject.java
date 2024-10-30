@@ -150,12 +150,15 @@ public class CS4421GroupProject {
                 mem.getUsed()
         );
 
+        System.out.println(MemInfo.getTotal());
+        System.out.println(MemInfo.getMemFree());
+        System.out.println(MemInfo.getMemAvailable());
+        System.out.println(MemInfo.getCached());
+        System.out.println(MemInfo.getBuffers());
         System.out.println(MemInfo.getActive());
         System.out.println(MemInfo.getInactive());
-        System.out.println(MemInfo.getBuffers());
-        System.out.println(MemInfo.getCached());
-        System.out.println(MemInfo.getSwapCached());
-        System.out.println(MemInfo.getActive());
+        System.out.println(MemInfo.getSwapTotal());
+        System.out.println(MemInfo.getSwapFree());
 
         Scanner input = new Scanner(System.in);
         System.out.print("\nPress Enter to return to main menu...");
