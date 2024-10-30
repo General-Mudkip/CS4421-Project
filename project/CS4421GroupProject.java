@@ -268,17 +268,22 @@ public class CS4421GroupProject {
 
         System.out.println("\n\nPROCESS INFO SUBMENU");
 
-        System.out.println("Enter a process ID from above, or 0 to exit, or 'names' to list all process names.");
+        System.out.printf("%s%n%s%n%s%n%s%n", "\t\t1) Get process information by ID", "\t\t2) Get all process names",
+                "\t\t3) Graph a process's heap size", "\t\t4) Return to the main menu"
+        );
 
+        System.out.print("Enter a number: ");
+        String str = input.nextLine();
+        while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4"))) {
+            System.out.println("Invalid option. Please try again.");
+            System.out.print("Enter a number: ");
+            str = input.nextLine();
+        }
 
-        String enteredProcess = input.nextLine();
-
-        while (!enteredProcess.equals("0")) {
-            if (enteredProcess.equals("names")) {
-                for (String PID: processes) {
-                    System.out.println(PID + ": " + ProcessInfo.getProcessName(PID));
-                }
-            } else {
+        switch (str) {
+            case "1":
+                System.out.println("Enter the process ID:");
+                String enteredProcess = input.nextLine();
                 while (!processes.contains(enteredProcess)) {
                     System.out.println("Invalid option. Please try again.");
                     System.out.print("Enter a number: ");
@@ -286,7 +291,7 @@ public class CS4421GroupProject {
                 }
 
                 clearScreen();
-                String[] dataPoint = new String[] {"Name", "Parent ID", "State", "Thread Count", "Virtual Memory Peak", "Virtual Memory Size", "Virtual Memory Heap Size", "Virtual Memory Stack Size"};
+                String[] dataPoint = new String[]{"Name", "Parent ID", "State", "Thread Count", "Virtual Memory Peak", "Virtual Memory Size", "Virtual Memory Heap Size", "Virtual Memory Stack Size"};
                 String[] dataValues = new String[8];
 
                 System.out.println("|================================================|");
@@ -309,13 +314,29 @@ public class CS4421GroupProject {
                 System.out.println("|================================================|");
 
                 System.out.print("\n\n");
-            }
-
-
-            handleProcessInfo();
+                break;
+            case "2":
+                for (String PID : processes) {
+                    System.out.println(PID + ": " + ProcessInfo.getProcessName(PID));
+                }
+                break;
+            case "3":
+                System.out.println("Enter the process ID:");
+                enteredProcess = input.nextLine();
+                while (!processes.contains(enteredProcess)) {
+                    System.out.println("Invalid option. Please try again.");
+                    System.out.print("Enter a number: ");
+                    enteredProcess = input.nextLine();
+                }
+                Display.graphProcessVMSize(enteredProcess);
+                break;
+            case "4":
+                return;
         }
 
+        handleProcessInfo();
     }
+
     public static void main(String[] args) throws Exception {
         // Load in Mark's library
         System.loadLibrary("sysinfo");
