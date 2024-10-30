@@ -268,43 +268,49 @@ public class CS4421GroupProject {
 
         System.out.println("\n\nPROCESS INFO SUBMENU");
 
-        System.out.println("Enter a process ID from above, or 0 to exit.");
+        System.out.println("Enter a process ID from above, or 0 to exit, or 'names' to list all process names.");
 
 
         String enteredProcess = input.nextLine();
 
         while (!enteredProcess.equals("0")) {
+            if (enteredProcess.equals("names")) {
+                for (String PID: processes) {
+                    System.out.println(PID + ": " + ProcessInfo.getProcessName(PID));
+                }
+            } else {
+                while (!processes.contains(enteredProcess)) {
+                    System.out.println("Invalid option. Please try again.");
+                    System.out.print("Enter a number: ");
+                    enteredProcess = input.nextLine();
+                }
 
-            while (!processes.contains(enteredProcess)) {
-                System.out.println("Invalid option. Please try again.");
-                System.out.print("Enter a number: ");
-                enteredProcess = input.nextLine();
+                clearScreen();
+                String[] dataPoint = new String[] {"Name", "Parent ID", "State", "Thread Count", "Virtual Memory Peak", "Virtual Memory Size", "Virtual Memory Heap Size", "Virtual Memory Stack Size"};
+                String[] dataValues = new String[8];
+
+                System.out.println("|================================================|");
+                String header = String.format("| %-28s | %-15s |", "Datapoint", "Value");
+                System.out.println(header);
+                System.out.println("|================================================|");
+                dataValues[0] = ProcessInfo.getProcessName(enteredProcess);
+                dataValues[1] = ProcessInfo.getParentProcesId(enteredProcess);
+                dataValues[2] = ProcessInfo.getProcessState(enteredProcess);
+                dataValues[3] = ProcessInfo.getProcessThreads(enteredProcess);
+                dataValues[4] = ProcessInfo.getProcessVirtualMemoryPeak(enteredProcess);
+                dataValues[5] = ProcessInfo.getProcessVirtualMemorySize(enteredProcess);
+                dataValues[6] = ProcessInfo.getProcessVirtualMemoryHeapSize(enteredProcess);
+                dataValues[7] = ProcessInfo.getProcessVirtualMemoryStackSize(enteredProcess);
+
+                for (int i = 0; i < dataValues.length; i++) {
+                    String formattedRow = String.format("| %-28s | %-15s |", dataPoint[i], dataValues[i]);
+                    System.out.println(formattedRow);
+                }
+                System.out.println("|================================================|");
+
+                System.out.print("\n\n");
             }
 
-            clearScreen();
-            String[] dataPoint = new String[] {"Name", "Parent ID", "State", "Thread Count", "Virtual Memory Peak", "Virtual Memory Size", "Virtual Memory Heap Size", "Virtual Memory Stack Size"};
-            String[] dataValues = new String[8];
-
-            System.out.println("|================================================|");
-            String header = String.format("| %-28s | %-15s |", "Datapoint", "Value");
-            System.out.println(header);
-            System.out.println("|================================================|");
-            dataValues[0] = ProcessInfo.getProcessName(enteredProcess);
-            dataValues[1] = ProcessInfo.getParentProcesId(enteredProcess);
-            dataValues[2] = ProcessInfo.getProcessState(enteredProcess);
-            dataValues[3] = ProcessInfo.getProcessThreads(enteredProcess);
-            dataValues[4] = ProcessInfo.getProcessVirtualMemoryPeak(enteredProcess);
-            dataValues[5] = ProcessInfo.getProcessVirtualMemorySize(enteredProcess);
-            dataValues[6] = ProcessInfo.getProcessVirtualMemoryHeapSize(enteredProcess);
-            dataValues[7] = ProcessInfo.getProcessVirtualMemoryStackSize(enteredProcess);
-
-            for (int i = 0; i < dataValues.length; i++) {
-                String formattedRow = String.format("| %-28s | %-15s |", dataPoint[i], dataValues[i]);
-                System.out.println(formattedRow);
-            }
-            System.out.println("|================================================|");
-
-            System.out.print("\n\n");
 
             handleProcessInfo();
         }
