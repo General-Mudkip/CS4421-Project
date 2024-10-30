@@ -150,7 +150,6 @@ public class CS4421GroupProject {
                 mem.getUsed()
         );
 
-        System.out.println(MemInfo.getTotal());
         System.out.println(MemInfo.getMemFree());
         System.out.println(MemInfo.getMemAvailable());
         System.out.println(MemInfo.getCached());

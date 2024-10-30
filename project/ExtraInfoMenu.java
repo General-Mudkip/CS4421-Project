@@ -25,7 +25,7 @@ public class ExtraInfoMenu {
                     displayPCIInfo(input);
                     break;
                 case 4:
-                    displaySystemInfo(input);
+                    displayMemoryInfo(input);
                     break;
                 case 5:
                     displayUSBInfo(input);
@@ -92,8 +92,8 @@ public class ExtraInfoMenu {
         returnToMenuPrompt(input);
     }
 
-    // system information
-    public static void displaySystemInfoInfo(Scanner input) {
+    // Memory information
+    public static void displayMemoryInfo(Scanner input) {
         clearScreen();
         System.out.println("\nMemory Information:");
         System.out.println("Memory is hardware that stores data and instructions in a computer.");
