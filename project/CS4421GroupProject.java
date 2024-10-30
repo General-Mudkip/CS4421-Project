@@ -109,14 +109,15 @@ public class CS4421GroupProject {
         diskInfo disk = new diskInfo();
         disk.read();
 
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println("| DISK\t\t\t| USED BLOCKS\t| AVAILABLE \t| TOTAL BLOCKS\t|");
-        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("| DISK\t\t\t| USED BLOCKS\t| AVAILABLE \t| TOTAL BLOCKS\t| % USED\t|");
+        System.out.println("-----------------------------------------------------------------------------------------");
         for (int i = 0; i < disk.diskCount(); i++) { // Iterate through all the disks
-            System.out.printf("| %-16s\t| %-10s\t| %-10s\t| %-10s\t|%n", disk.getName(i), disk.getUsed(i),
-                    disk.getAvailable(i), disk.getTotal(i));
+            double percentUsed = ((double) disk.getUsed(i) / disk.getTotal(i))*100;
+            System.out.printf("| %-16s\t| %-10s\t| %-10s\t| %-10s\t| %-6f\t|%n", disk.getName(i), disk.getUsed(i),
+                    disk.getAvailable(i), disk.getTotal(i), percentUsed);
         }
-        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------");
 
         Scanner input = new Scanner(System.in);
         System.out.print("\n1) Return to main menu\n2) See additional information about disk\n");
