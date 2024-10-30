@@ -145,8 +145,8 @@ public class CS4421GroupProject {
                     if (pci.functionPresent(i, j, k) > 0) {
                         String vendorID = String.format("%04X", pci.vendorID(i, j, k));
                         String deviceID = String.format("%04X", pci.productID(i, j, k));
-                        ArrayList<String> result = (ArrayList<String>) FetchPCIData.pciNamer(vendorID, deviceID);
-                        String vendorName = result.get(0);
+                         ArrayList<String> result = (ArrayList<String>) FetchPCIData.pciNamer(vendorID, deviceID);
+                         String vendorName = result.get(0);
                         String deviceName = result.get(1);
                         System.out.printf("\t\t#%d: Vendor: %s  %s%n\t\t    Device: %s  %s%n",
                                 (k + 1), vendorID, vendorName, deviceID, deviceName);

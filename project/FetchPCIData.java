@@ -19,7 +19,7 @@ public class FetchPCIData {
         String deviceName = "Device unknown";
 
         // Read in data from the CSV file using Scanner
-        Scanner readCsv = new Scanner(new File("/home/skye-fitzpatrick/Desktop/PCI-Lookup.csv"));
+        Scanner readCsv = new Scanner(new File("./PCI-Lookup.csv"));
 
         /* The CSV contains data in the form [vendorID, vendor name, deviceID, device name],
          * and was copied from https://pcilookup.com.
