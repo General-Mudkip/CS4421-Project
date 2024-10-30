@@ -16,7 +16,7 @@ public class CS4421GroupProject {
         while (true) {
             clearScreen();
             System.out.println("\tSYSTEM INFORMATION MAIN MENU");
-            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "\t\t1) CPU Info", "\t\t2) Disk Info",
+            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n", "\t\t1) CPU Info", "\t\t2) Disk Info",
                     "\t\t3) PCI Info", "\t\t4) Memory Info", "\t\t5) USB Info","\t\t6) Process Info", "\t\t7) Exit");
 
             System.out.print("Enter a number: ");
@@ -50,7 +50,7 @@ public class CS4421GroupProject {
 
         // Note the getModel() method returns a string AND a newline
         System.out.println("Your computer has been on for " + CpuInfo.getUptime() + " seconds.");
-        System.out.println("That's about " + (int) (CpuInfo.getUptime() / 60 )+ " minutes, or " + (int) (CpuInfo.getUptime() / 3600 ) + " hours.\n");
+        System.out.println("That's about " + (int) (CpuInfo.getUptime() / 60 )+ " minutes, or " + (int) (CpuInfo.getUptime() / 3600 ) + " hours.\n\n");
         System.out.print("CPU Model: " + cpu.getModel());
         System.out.println("CPU Sockets: " + cpu.socketCount());
         System.out.println("Cores Per Socket: " + cpu.coresPerSocket());
@@ -63,12 +63,13 @@ public class CS4421GroupProject {
 
         // THE SUBMENU LOGIC
         System.out.println("\n\nCPU INFO SUBMENU");
-        System.out.println("\t1) CPU Clock Speed (Graph)\n\t2) Core Idle Time (Graph)" +
-                "\n\t3) Output All Core Idle Times\n\t4) See additional information about CPU\n\t5) Return to main menu");
+
+        System.out.printf("%s%n%s%n%s%n%s%n", "\t\t1) CPU Clock Speed (Graph)", "\t\t2) Core Idle Time (Graph)",
+                "\t\t3) Output All Core Idle Times", "\t\t4) Return to main menu");
 
         System.out.print("Enter a number: ");
         String str = input.nextLine();
-        while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4") | str.equals("5"))) {
+        while (!(str.equals("1") | str.equals("2") | str.equals("3") | str.equals("4"))) {
             System.out.println("Invalid option. Please try again.");
             System.out.print("Enter a number: ");
             str = input.nextLine();
@@ -103,9 +104,10 @@ public class CS4421GroupProject {
                 }
                 System.out.println("\n\nReturn to menu? Hit enter.");
                 input.nextLine();
-            case "4": ExtraInfoMenu.displayCPUInfo();
-            case "5": System.out.println("Exiting...\nThank you!! :)"); return;
+                break;
+            case "4": System.out.println("Exiting...\nThank you!! :)"); return;
         }
+
         // Recursively call the function. fun!
         handleCPUInfo();
     }
@@ -126,8 +128,7 @@ public class CS4421GroupProject {
         System.out.println("-----------------------------------------------------------------------------------------");
 
         Scanner input = new Scanner(System.in);
-        System.out.println("\n\nDISK INFO SUBMENU");
-        System.out.println("\t1) Return to main menu\n\t2) See additional information about disk");
+        System.out.print("\n1) Return to main menu\n2) See additional information about disk\n");
         System.out.print("Enter a number: ");
         String choice = input.nextLine();
         while (!(choice.equals("1") | choice.equals("2"))) {
@@ -168,8 +169,7 @@ public class CS4421GroupProject {
             }
         }
         Scanner input = new Scanner(System.in);
-        System.out.println("\n\nPCI INFO SUBMENU");
-        System.out.println("\t1) Return to main menu\n\t2) See additional information about PCI");
+        System.out.print("\n1) Return to main menu\n2) See additional information about PCI\n");
         System.out.print("Enter a number: ");
         String choice = input.nextLine();
         while (!(choice.equals("1") | choice.equals("2"))) {
@@ -198,11 +198,12 @@ public class CS4421GroupProject {
         );
 
         System.out.println("\n\nMEMORY INFO SUBMENU");
-        System.out.println("\t1) Used/Available Memory Share (Graph)\n\t2) See additional information about memory\n\t3) Return to main menu");
+
+        System.out.printf("%s%n%s%n", "\t\t1) Used/Available Memory Share (Graph)", "\t\t2) Return to main menu");
 
         System.out.print("Enter a number: ");
         String str = input.nextLine();
-        while (!(str.equals("1") | str.equals("2") | str.equals("3"))) {
+        while (!(str.equals("1") | str.equals("2"))) {
             System.out.println("Invalid option. Please try again.");
             System.out.print("Enter a number: ");
             str = input.nextLine();
@@ -214,8 +215,6 @@ public class CS4421GroupProject {
                 Display.graphMemoryShare();
                 break;
             case "2":
-                ExtraInfoMenu.displayMemoryInfo();
-            case "3":
                 System.out.println("Exiting...\nThank you!! :)");
                 return;
         }
@@ -244,8 +243,7 @@ public class CS4421GroupProject {
         }
 
         Scanner input = new Scanner(System.in);
-        System.out.println("\n\nUSB INFO SUBMENU");
-        System.out.println("\t1) Return to main menu\n\t2) See additional information about usb");
+        System.out.print("\n1) Return to main menu\n2) See additional information about usb\n");
         System.out.print("Enter a number: ");
         String choice = input.nextLine();
         while (!(choice.equals("1") | choice.equals("2"))) {
@@ -267,8 +265,9 @@ public class CS4421GroupProject {
         System.out.println(processes);
 
         System.out.println("\n\nPROCESS INFO SUBMENU");
-        System.out.println("\t1) Get process information by ID\n\t2) Get all process names\n\t" +
-                "3) Graph a process's heap size\n\t4) Return to the main menu"
+
+        System.out.printf("%s%n%s%n%s%n%s%n", "\t\t1) Get process information by ID", "\t\t2) Get all process names",
+                "\t\t3) Graph a process's heap size", "\t\t4) Return to the main menu"
         );
 
         System.out.print("Enter a number: ");
