@@ -3,12 +3,29 @@ import GetSysInfo.MemInfo;
 import GetSysInfo.ProcessInfo;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Display {
     public static void graphCPUClockSpeed() throws InterruptedException {
+        Scanner input = new Scanner(System.in);
+        Integer coreNumber;
+        try {
+            System.out.println("Readable CPU Threads: " + (CpuInfo.getThreadCount() - 2) +  "\nEnter the CPU core:");
+            coreNumber = input.nextInt();
+
+            System.out.println(CpuInfo.getThreadCount());
+            if (coreNumber > CpuInfo.getThreadCount() - 2) {
+                System.out.println("INVALID THREAD NUMBER!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("INVALID THREAD!");
+            return;
+        }
+
         // Create the line graph with all of the necessary information, providing two empty double arrays because
         // we don't have any information yet.
-        LineGraph chart = new LineGraph("CPU MHz", "Time", "MHz", "MHz", new double[2], new double[2]);
+        LineGraph chart = new LineGraph("THREAD " + coreNumber + " CPU MHz", "Time", "MHz", "MHz", new double[2], new double[2]);
         chart.displayGraph();
 
         // Get the current time in milliseconds since epoch (1st January, 1970)
@@ -24,7 +41,7 @@ public class Display {
         // While the JFrame is showing (open) on the user's screen. Without this loop, it'd only fetch the data once.
         // Cannot be a `while (true)` since then it'd keep looping even once the JFrame was closed.
         while (chart.frame.isShowing()) {
-            // Get the difference between the current time and the start time. Th
+            // Get the difference between the current time and the start time.
             double elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
 
             // Set the Y axis min and max bounds. This stops the graph view from bouncing around too much.
@@ -36,7 +53,7 @@ public class Display {
             Thread.sleep(100);
 
             // Gets the provided core's clock speed.
-            double cpuMHz = CpuInfo.getCoreClockSpeed(0);
+            double cpuMHz = CpuInfo.getCoreClockSpeed(coreNumber);
 
             // Add the elapsedTime (X value) and cpuMHz (Y value) to the array list
             returnValue.get(0).add(elapsedTime);

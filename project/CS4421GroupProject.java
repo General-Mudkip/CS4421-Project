@@ -64,7 +64,7 @@ public class CS4421GroupProject {
         // THE SUBMENU LOGIC
         System.out.println("\n\nCPU INFO SUBMENU");
 
-        System.out.printf("%s%n%s%n%s%n%s%n", "\t\t1) CPU Clock Speed (Graph)", "\t\t2) Core Idle Time (Graph)",
+        System.out.printf("%s%n%s%n%s%n%s%n", "\t\t1) Thread Clock Speed (Graph)", "\t\t2) Core Idle Time (Graph)",
                 "\t\t3) Output All Core Idle Times", "\t\t4) Return to main menu");
 
         System.out.print("Enter a number: ");
@@ -77,7 +77,7 @@ public class CS4421GroupProject {
         clearScreen();
         switch (str) {
             case "1":
-                System.out.println("Displaying clock speed...");
+                System.out.println("Displaying thread clock speed...");
                 Display.graphCPUClockSpeed();
                 break;
             case "2":
