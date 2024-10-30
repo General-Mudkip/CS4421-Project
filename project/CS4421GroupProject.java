@@ -107,6 +107,7 @@ public class CS4421GroupProject {
                 }
                 System.out.println("\n\nReturn to menu? Hit enter.");
                 input.nextLine();
+                break;
             case "4": System.out.println("Exiting...\nThank you!! :)"); return;
         }
 
