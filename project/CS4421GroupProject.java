@@ -4,9 +4,7 @@ import java.util.Scanner;
 
 public class CS4421GroupProject {
 
-    public static void clearScreen() {
-        System.out.print("\033\143");
-    }
+    public static void clearScreen() { System.out.print("\033\143");}
 
     public static void menu() throws Exception {
         Scanner input = new Scanner(System.in);
@@ -55,12 +53,20 @@ public class CS4421GroupProject {
         for (int i = 0; i < cpu.socketCount(); i++) {
             PieGraph graph = new PieGraph("Idle Times");
             for (int j = 0; j < cpu.coresPerSocket(); j++) {
-                System.out.printf("CPU socket %d, Core %d:%n", i+1, j+1);
-                Integer idleTime = cpu.getIdleTime(j)*10;
-                Integer userTime = cpu.getUserTime(j)*10;
-                Integer systemTime =cpu.getSystemTime(j)*10;
-
-                /**
+                System.out.printf("CPU socket %d, Core %d:%n", i + 1, j + 1);
+                Integer idleTime = cpu.getIdleTime(j) * 10;
+                Integer userTime = cpu.getUserTime(j) * 10;
+                Integer systemTime = cpu.getSystemTime(j) * 10;
+                if (!(idleTime == 0 & userTime == 0 & systemTime == 0)) {
+                    double total = idleTime + userTime + systemTime;
+                    System.out.printf("\tIdle time\t%-4d milliseconds\t%f%%%n\tUser time\t%-4d milliseconds\t%f%%" +
+                                    "%n\tSystem time\t%-4d milliseconds\t%f%%%n", idleTime, (idleTime / total) * 100,
+                            userTime, (userTime/ total) * 100, systemTime, (systemTime / total) * 100);
+                } else {
+                    System.out.printf("\tIdle time\t%-4d milliseconds%n\tUser time\t%-4d milliseconds%n\t" +
+                            "System time\t%-4d milliseconds%n", idleTime, userTime, systemTime);
+                }
+                /*
                 graph.addSeries("Idle Time" + j, idleTime);
                 graph.addSeries("User Time" + j, userTime);
                 graph.addSeries("System Time"+ j, systemTime);
@@ -79,7 +85,6 @@ public class CS4421GroupProject {
                     Thread.sleep(100);
                 }
                  */
-                 System.out.printf("\tIdle time = %d milliseconds%n\tUser time = %d milliseconds%n\tSystem time = %d milliseconds%n", idleTime, userTime, systemTime);
             }
         }
         //Display.GraphCPUClockSpeed();
